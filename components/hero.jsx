@@ -8,8 +8,24 @@ import Image from "next/image";
 const HeroSection = () => {
   const imageRef = useRef(null);
 
-  // Run when component is loaded
-  useEffect(() => {}, []);
+  // image scroll when the component mounts
+  useEffect(() => {
+    const imageElement = imageRef.current;
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY; //get current scroll position
+      const threashold = 250; //define when the effect should trigger
+
+      if (scrollPosition > threashold) {
+        // If scrolled past threshold, add class
+        imageElement.classList.add("scrolled");
+      } else {
+        imageElement.classList.remove("scrolled");
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <section className="w-full pt-36 md:pt-48 pb-10">
