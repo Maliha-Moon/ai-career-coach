@@ -11,16 +11,20 @@ const isProtectedRoute = createRouteMatcher([
 ]);
 
 export default clerkMiddleware(async (auth, req) => {
-  const { userId } = await auth; // get the current user's id
-
-  // if not signedIn, redirect to sign-in page
-  if (!userId && isProtectedRoute(req)) {
-    const { redirectToSignIn } = await auth();
-    return redirectToSignIn();
-  }
-  // if yes, then take to whatever next
-  return NextResponse.next();
+  if (isProtectedRoute(req)) await auth.protect();
 });
+
+// export default clerkMiddleware(async (auth, req) => {
+//   const { userId } = await auth; // get the current user's id
+
+//   // if not signedIn, redirect to sign-in page
+//   if (!userId && isProtectedRoute(req)) {
+//     const { redirectToSignIn } = await auth();
+//     return redirectToSignIn();
+//   }
+//   // if yes, then take to whatever next
+//   return NextResponse.next();
+// });
 
 export const config = {
   matcher: [
