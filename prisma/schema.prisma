@@ -28,9 +28,9 @@ model User{
   // Profile fields
   bio           String?
   experience    Int?      // Years of experience
-  skills        String[]  // Array of skills
-   
+  
   // Relations
+  skills        String[]  // Array of skills
   assessments   Assessment[]
   resume        Resume?
   coverLetter   CoverLetter[]
@@ -67,6 +67,7 @@ model CoverLetter{
   jobDescription  String?
   companyName     String
   jobTitle        String
+  status          String    @default("draft")
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt 
 

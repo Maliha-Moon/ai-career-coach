@@ -5,23 +5,23 @@ import { NextResponse } from "next/server";
 const isProtectedRoute = createRouteMatcher([
   "/dashboard(.*)",
   "/resume(.*)",
-  "/interview-prep(.*)",
+  "/interview(.*)",
   "/ai-cover-letter(.*)",
   "/onboarding(.*)",
 ]);
 
+//Automatically redirects unauthenticated users to sign-in page
 export default clerkMiddleware(async (auth, req) => {
   if (isProtectedRoute(req)) await auth.protect();
 });
 
 // export default clerkMiddleware(async (auth, req) => {
-//   const { userId } = auth(); // get the current user's id
+//   const { userId } = await auth; // get the current user's id
 
-//   // if not signed In and trying to access a protected route, redirect to sign-in page
+//   // if not signedIn, redirect to sign-in page
 //   if (!userId && isProtectedRoute(req)) {
 //     const { redirectToSignIn } = await auth();
 //     return redirectToSignIn();
-//     //return auth().redirectToSignIn({ returnBackUrl: req.url });
 //   }
 //   // if yes, then take to whatever next
 //   return NextResponse.next();

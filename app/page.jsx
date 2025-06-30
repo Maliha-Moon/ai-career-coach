@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 
 import HeroSection from "@/components/hero";
 import {
@@ -13,15 +13,14 @@ import { faqs } from "@/data/faqs";
 import { features } from "@/data/features";
 import { howItWorks } from "@/data/howItWorks";
 import { testimonial } from "@/data/testimonial";
-import { ArrowRight } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
+import { ArrowRight } from "lucide-react";
 
 export default function Home() {
   return (
     <div>
       <div className="grid-background"></div>
-      {/* Hero section */}
       <HeroSection />
 
       {/* Features section */}

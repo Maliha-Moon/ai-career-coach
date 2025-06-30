@@ -17,7 +17,6 @@ const HeroSection = () => {
 
       if (scrollPosition > threashold) {
         // If scrolled past threshold, add class
-
         imageElement.classList.add("scrolled");
       } else {
         imageElement.classList.remove("scrolled");
@@ -51,7 +50,7 @@ const HeroSection = () => {
               Get Started
             </Button>
           </Link>
-          <Link href="https://www.youtube.com/roadsidecoder">
+          <Link href="./">
             <Button size="lg" className="px-8" variant="outline">
               Get Started
             </Button>

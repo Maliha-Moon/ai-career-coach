@@ -2,17 +2,11 @@
 
 import { db } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
-import { generateAIInsights } from "./dashboard";
 
-// Updating user profiles (industry, experience, bio, skills)
-// Creating/updating industry insights if they don’t exist
-// consistency between User and IndustryInsight tables
 export async function userUpdate(data) {
-  // check authentication
   const { userId } = await auth();
   if (!userId) throw new Error("Unauthorized"); // if not logged-in, throw error
 
-  // ensures user exists in DB
   const user = await db.user.findUnique({
     where: {
       clerkUserId: userId,
@@ -22,7 +16,6 @@ export async function userUpdate(data) {
   if (!userId) throw new Error("User not found");
 
   try {
-    // Start a transaction to handle both operations
     const result = await db.$transaction(
       async (tx) => {
         // find if the industry exists
@@ -34,12 +27,17 @@ export async function userUpdate(data) {
 
         // if the industry doesn't exist, create it
         if (!industryInsight) {
-          const insights = await generateAIInsights(data.industry);
-          industryInsight = await db.industryInsight.create({
+          industryInsight = await tx.industryInsight.create({
             data: {
               industry: data.industry,
-              ...insights,
-              nextUpdate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+              salaryRanges: [],
+              growthRate: 0,
+              demandLevel: "Medium",
+              topSkills: [],
+              marketOutlook: "Neutral",
+              keyTrends: [],
+              recommendedSkills: [],
+              nextUpdate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 1 week from now
             },
           });
         }
@@ -62,14 +60,13 @@ export async function userUpdate(data) {
       },
       { timeout: 10000 }
     );
-    return { success: true, ...result };
+    return result.user;
   } catch (error) {
     console.error("Error updating user and industry:", error.message);
-    throw new Error("Failed to update profile" + error.message);
+    throw new Error("Failed to update profile");
   }
 }
 
-// checking if user has completed onboarding or created profile
 export async function getUserOnboardingStatus() {
   const { userId } = await auth();
   if (!userId) throw new Error("Unauthorized"); // if not logged-in, throw error

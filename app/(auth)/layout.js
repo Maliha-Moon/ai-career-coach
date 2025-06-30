@@ -6,3 +6,4 @@ const AuthLayuot = ({ children }) => {
 };
 
 export default AuthLayuot;
+

@@ -25,24 +25,21 @@ import {
 } from "./ui/dropdown-menu";
 import { CheckUser } from "@/lib/checkUser";
 
-export default async function Header() {
+const Header = async () => {
   await CheckUser();
-
   return (
     <header className="fixed top-0 w-full border-b bg-background/80 backdrop-blur-md z-50 supports-[backdrop-filter]:bg-background/60">
       {/* ⚠️backdrop-blur-md -> anything behind header will have blury effect */}
-
-      {/* contain all navigation items of app */}
       <nav className="container mx-auto px-4 h-16 flex items-center justify-between">
-        {/* navigate different pages/routes */}
+        {/* contain all navigation items of app */}
         <Link href="/">
+          {/* navigate different pages/routes */}
           <Image
             src="/logo.jpg"
             alt="SkillSyncAi logo"
             width={200}
             height={60}
             className="h-15 py-1 w-auto object-contain"
-            priority
           />
         </Link>
 
@@ -60,20 +57,20 @@ export default async function Header() {
             {/* dashboard / drop down menu */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button className="flex items-center gap-2">
+                <Button>
                   <StarsIcon className="h-4 w-4" />
                   <span className="hidden md:block"> Growth Tools </span>
                   <ChevronDown className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48">
-                <DropdownMenuItem asChild>
+              <DropdownMenuContent>
+                <DropdownMenuItem>
                   <Link href="/resume" className="flex items-center gap-2">
                     <FileText className="h-4 w-4" />
                     <span> Resume Buider </span>
                   </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem asChild>
+                <DropdownMenuItem>
                   <Link
                     href="/ai-cover-letter"
                     className="flex items-center gap-2"
@@ -82,11 +79,8 @@ export default async function Header() {
                     <span> Cover Letter </span>
                   </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link
-                    href="/interview-prep"
-                    className="flex items-center gap-2"
-                  >
+                <DropdownMenuItem>
+                  <Link href="/interview" className="flex items-center gap-2">
                     <GraduationCap className="h-4 w-4" />
                     <span> Interview Prep </span>
                   </Link>
@@ -100,24 +94,13 @@ export default async function Header() {
               <Button variant="outline"> Sign In</Button>
             </SignInButton>
           </SignedOut>
-
           <SignedIn>
-            <UserButton
-              appearance={{
-                elements: {
-                  avatarBox: "w-10 h-10",
-                  userButtonPopoverCard: "shadow-xl",
-                  userPreviewMainIdentifier: "font-semibold",
-                },
-              }}
-              // afterSignOutUrl="/"
-              // signOutOptions={{
-              //   callbackUrl: "/", // Alternative if you need more control
-              // }}
-            />
+            <UserButton />
           </SignedIn>
         </div>
       </nav>
     </header>
   );
-}
+};
+
+export default Header;
