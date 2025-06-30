@@ -5,11 +5,12 @@ import { NextResponse } from "next/server";
 const isProtectedRoute = createRouteMatcher([
   "/dashboard(.*)",
   "/resume(.*)",
-  "/interview-prep(.*)",
+  "/interview(.*)",
   "/ai-cover-letter(.*)",
   "/onboarding(.*)",
 ]);
 
+//Automatically redirects unauthenticated users to sign-in page
 export default clerkMiddleware(async (auth, req) => {
   if (isProtectedRoute(req)) await auth.protect();
 });

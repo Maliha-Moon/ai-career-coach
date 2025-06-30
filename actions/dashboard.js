@@ -58,7 +58,7 @@ export async function getIndustryInsights() {
 
   if (!userId) throw new Error("User not found");
 
-// if the industry doesn't exist, create it
+  // if the industry doesn't exist, create it
   if (!user.industryInsight) {
     // find if insight exists in db
     let industryInsight = await db.industryInsight.findUnique({
@@ -81,4 +81,3 @@ export async function getIndustryInsights() {
   // if already connected
   return user.industryInsight;
 }
-

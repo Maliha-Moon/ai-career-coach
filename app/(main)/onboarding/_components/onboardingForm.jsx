@@ -33,14 +33,16 @@ const OnboardingForm = ({ industries }) => {
   const [selectedIndustry, setselectedIndustry] = useState(null);
   // to navigate other page
   const router = useRouter();
-  // take server action and provid 3 things
 
+  // take server action and provid 3 things
+  // API integration
   const {
     loading: updateLoading,
     fn: updateUserFn,
     data: updateResult,
   } = useFetch(userUpdate);
 
+  // Form setup
   const {
     register,
     handleSubmit,
@@ -51,6 +53,7 @@ const OnboardingForm = ({ industries }) => {
     resolver: zodResolver(onboardingSchema),
   });
 
+  // form submission
   const onSubmit = async (values) => {
     try {
       const formattedIndustry = `${values.industry}-${values.subIndustry

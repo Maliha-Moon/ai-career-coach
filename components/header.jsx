@@ -26,7 +26,7 @@ import {
 import { CheckUser } from "@/lib/checkUser";
 
 const Header = async () => {
-   await CheckUser();
+  await CheckUser();
   return (
     <header className="fixed top-0 w-full border-b bg-background/80 backdrop-blur-md z-50 supports-[backdrop-filter]:bg-background/60">
       {/* ⚠️backdrop-blur-md -> anything behind header will have blury effect */}
@@ -56,7 +56,7 @@ const Header = async () => {
 
             {/* dashboard / drop down menu */}
             <DropdownMenu>
-              <DropdownMenuTrigger>
+              <DropdownMenuTrigger asChild>
                 <Button>
                   <StarsIcon className="h-4 w-4" />
                   <span className="hidden md:block"> Growth Tools </span>
@@ -80,10 +80,7 @@ const Header = async () => {
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <Link
-                    href="/interview-prep"
-                    className="flex items-center gap-2"
-                  >
+                  <Link href="/interview" className="flex items-center gap-2">
                     <GraduationCap className="h-4 w-4" />
                     <span> Interview Prep </span>
                   </Link>

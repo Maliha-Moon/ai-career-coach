@@ -1,7 +1,21 @@
-"use client";
+// "use client";
 
 import HeroSection from "@/components/hero";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { faqs } from "@/data/faqs";
+import { features } from "@/data/features";
+import { howItWorks } from "@/data/howItWorks";
+import { testimonial } from "@/data/testimonial";
+import Link from "next/link";
+import Image from "next/image";
+import { ArrowRight } from "lucide-react";
 
 export default function Home() {
   return (
@@ -9,7 +23,7 @@ export default function Home() {
       <div className="grid-background"></div>
       <HeroSection />
 
-           {/* Features section */}
+      {/* Features section */}
       <section className="w-full py-12 md:py-24 lg:py-32 bg-background">
         <div className="container mx-auto px-4 md:px-6">
           <h2 className="text-3xl font-bold tracking-tighter text-center mb-12">
@@ -193,7 +207,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-      
     </div>
   );
 }

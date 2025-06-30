@@ -4,7 +4,7 @@ import { db } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 
 export async function userUpdate(data) {
-  const {userId} = await auth();
+  const { userId } = await auth();
   if (!userId) throw new Error("Unauthorized"); // if not logged-in, throw error
 
   const user = await db.user.findUnique({
@@ -68,7 +68,7 @@ export async function userUpdate(data) {
 }
 
 export async function getUserOnboardingStatus() {
-  const {userI}d = await auth();
+  const { userId } = await auth();
   if (!userId) throw new Error("Unauthorized"); // if not logged-in, throw error
 
   const user = await db.user.findUnique({
