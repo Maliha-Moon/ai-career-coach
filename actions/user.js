@@ -2,6 +2,8 @@
 
 import { db } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
+import { generateAIInsights } from "./dashboard";
+import { revalidatePath } from "next/cache";
 
 export async function userUpdate(data) {
   const { userId } = await auth();
@@ -13,7 +15,7 @@ export async function userUpdate(data) {
     },
   });
 
-  if (!userId) throw new Error("User not found");
+  if (!user) throw new Error("User not found");
 
   try {
     const result = await db.$transaction(
@@ -27,16 +29,12 @@ export async function userUpdate(data) {
 
         // if the industry doesn't exist, create it
         if (!industryInsight) {
-          industryInsight = await tx.industryInsight.create({
+          const insights = await generateAIInsights(data.industry);
+
+          industryInsight = await db.industryInsight.create({
             data: {
               industry: data.industry,
-              salaryRanges: [],
-              growthRate: 0,
-              demandLevel: "Medium",
-              topSkills: [],
-              marketOutlook: "Neutral",
-              keyTrends: [],
-              recommendedSkills: [],
+              ...insights,
               nextUpdate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 1 week from now
             },
           });
@@ -60,6 +58,7 @@ export async function userUpdate(data) {
       },
       { timeout: 10000 }
     );
+    revalidatePath("/"); // Make sure the homepage list is up‑to‑date
     return result.user;
   } catch (error) {
     console.error("Error updating user and industry:", error.message);
