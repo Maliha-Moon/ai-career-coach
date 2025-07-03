@@ -22,9 +22,9 @@ import { EntryForm } from "./entry-form";
 import { useUser } from "@clerk/nextjs";
 import MDEditor from "@uiw/react-md-editor";
 import { entriesToMarkdown } from "@/app/lib/helper";
-// import html2pdf from "html2pdf.js/dist/html2pdf.min.js";
+import html2pdf from "html2pdf.js/dist/html2pdf.min.js";
 import { toast } from "sonner";
-import { html2pdf } from "html2pdf.js";
+// import { html2pdf } from "html2pdf.js";
 
 export default function ResumeBuilder({ initialContent }) {
   const [activeTab, setActiveTab] = useState("edit");
